@@ -15,7 +15,6 @@ class ApiClient{
 
             const url = `${this.baseUrl}${endpoint}`;
             const headers = {...this.defaultHeaders , ...options.headers}
-
             const config = {
                 ...options ,
                 headers,
@@ -27,10 +26,7 @@ class ApiClient{
             const response = await fetch(url , config);
             const  data = await response.json();
 
-            
-
-
-             
+            return data;
 
         }catch(error){
             console.error("Api call error " , error);
@@ -39,6 +35,17 @@ class ApiClient{
         }
      }
 
+
+     //Auth endpints
+
+     async signup(name , email ,password){
+        this.customFetch("/users/signup",{
+            method: "POST",
+            body : JSON.stringify({name , email , password})
+
+        });
+
+     }
 
 
 
