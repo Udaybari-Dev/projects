@@ -23,7 +23,13 @@ class ApiClient{
             }
 
             console.log(`Fetching : ${url}`);
+
+            const response = await fetch(url , config);
+            const  data = await response.json();
+
             
+
+
              
 
         }catch(error){
