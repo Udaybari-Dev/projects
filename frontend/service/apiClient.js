@@ -10,7 +10,7 @@ class ApiClient{
         };
      }
 
-     async customFetch(ennpoint , option = {}) {
+     async customFetch(endpoint , options = {}) {
         try{
 
             const url = `${this.baseUrl}${endpoint}`;
@@ -39,15 +39,47 @@ class ApiClient{
      //Auth endpints
 
      async signup(name , email ,password){
-        this.customFetch("/users/signup",{
+        return this.customFetch("/users/signup",{
             method: "POST",
             body : JSON.stringify({name , email , password})
-
         });
-
      }
+
+     
+     async login( email ,password){
+        return this.customFetch("/users/login",{
+            method: "GET",
+            body : JSON.stringify({email , password})
+        });
+     }
+
+     
+     async logout( email ,password){
+        return this.customFetch("/users/logout",{
+            method: "GET",
+            body : JSON.stringify({email , password})
+        });
+     }
+
+     async getProfile(){
+        return this.customFetch("/users/me");
+     }
+
+
+     
+     
+
+
+
+
+     
 
 
 
 }
  
+
+const apiClient = new ApiClient();
+
+
+export default apiClient;

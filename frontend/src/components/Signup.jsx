@@ -1,4 +1,6 @@
 import { useState } from "react";
+import apiClient from "../../service/apiClient";
+import { useNavigate } from "react-router";
 
 
 function  Signup() {
@@ -7,7 +9,11 @@ function  Signup() {
     const [email , setEmail] = useState("");
     const [password , setPassword] = useState("");
     const [loading , setLoading] = useState(false);
-    const [error , setError] = useState(null);
+    const [error , setError] = useState("testedge");
+
+    //for nav use hook useNavigate 
+    const navigate = useNavigate();
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -18,13 +24,33 @@ function  Signup() {
         // get response from backend 
         // take action based on response 
 
+        try {
+            console.log(`trying to do signup `);
+            const data = await apiClient.signup(name , email ,password);
 
-    }
+            console.log("Signup response" , data);
+
+            if(data.success){
+                navigate('/login');
+            }else{
+                setError(data.massage || 'Signup-failed');
+            }
+            
+        } catch (error) {
+            console.log("Signup failed" , error);
+             
+        }
+
+
+    };
 
  
     return(
         <div className="signup">
           <h1>Welcome to Signup page</h1>
+
+          {error && <div> Error : {error}</div>}
+
           <form onSubmit = {handleSubmit}>
             <div className="form-group">
                 <label htmlFor="name">Name :</label>
